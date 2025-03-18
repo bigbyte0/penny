@@ -12,14 +12,16 @@ def run():
     path = pathlib.Path(file_path)
     with path.open('r') as file:
         p.read(file.readlines())
+    print()
 
     for card in p.shuffled():
         print(card.front, end="")
         _ = input()
         print(card.back, end="")
         _ = input()
+        print()
 
-    print("Session Complete")
+    print("*** Session Complete ***")
 
 if __name__ == '__main__':
     run()
