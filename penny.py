@@ -7,6 +7,8 @@ _MODE_BACK = 1
 class Penny:
     def __init__(self):
         self._cards: list[Card] = []
+        self._front_divider = "[f]"
+        self._back_divider = "[b]"
 
     def cards(self):
         return self._cards
@@ -16,9 +18,9 @@ class Penny:
 
         for i in range(len(lines)):
             line = lines[i].strip()
-            if line.lower() == '[front]':
+            if line.lower() == self._front_divider:
                 mode = _MODE_FRONT
-            elif line.lower() == '[back]':
+            elif line.lower() == self._back_divider:
                 mode = _MODE_BACK
             elif line != '':
                 # A card's front can only be one line
@@ -37,3 +39,18 @@ class Penny:
         shuffled_cards = self._cards.copy()
         random.shuffle(shuffled_cards)
         yield from shuffled_cards
+
+    def config(self, cfg: list[str]):
+        """Reads a list of configuration details for Penny"""
+        for line in cfg:
+            line = line.strip()
+
+            # Reading variables
+            line_split = line.split("=")
+            var_name = line_split[0]
+            var_val = line_split[1]
+            if var_name == 'front_divider':
+                self._front_divider = var_val
+            elif var_name == 'back_divider':
+                self._back_divider = var_val
+
